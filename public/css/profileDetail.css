@@ -1,0 +1,32 @@
+.info{
+    display:flex;
+    flex-direction: row;
+}
+
+.profileImg{
+    margin-right: 20px;
+    border-radius: 50%;
+    width: 160px;
+    pointer-events: none;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.info>div{
+    display: flex;
+    flex-direction: column;
+}
+
+.info>div>h1{
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.info>div>p{
+    max-width: 300px;
+}
+
+h2{
+    font-weight: bold;
+    font-size: 20px;
+}
