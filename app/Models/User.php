@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pet::class);
     }
+
+    public function periods():HasMany
+    {
+        return $this->hasMany(Period::class);
+    }
 }

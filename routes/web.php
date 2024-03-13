@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Pet;
@@ -42,6 +43,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('pets', PetController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('periods', PeriodController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 

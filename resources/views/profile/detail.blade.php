@@ -1,4 +1,3 @@
-@php use function PHPUnit\Framework\isEmpty; @endphp
 <x-app-layout>
     <x-slot name="header">
         <link href="{{ asset('css/profileDetail.css') }}" rel="stylesheet" type="text/css">
@@ -49,7 +48,11 @@
 
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <h2>Home</h2>
-                <p>Hier kun je foto's plaatsen van je huis</p>
+                @if($user->is(auth()->user()))
+                    <p>Show others your home to make sure it's pet safe</p>
+                @else
+                    <p>Nothing to show</p>
+                @endif
             </div>
         </div>
     </div>
