@@ -30,8 +30,7 @@
                             <div class="flex justify-between items-center">
                                 <div>
                                     <a class="text-gray-800" href="/user/{{$pet->user->id}}">{{ $pet->user->name }}</a>
-                                    <small
-                                        class="ml-2 text-sm text-gray-600">{{ $pet->created_at->format('j M Y, g:i a') }}</small>
+                                    <small class="ml-2 text-sm text-gray-600">{{ $pet->created_at->format('j M Y, g:i a') }}</small>
                                 </div>
                             </div>
                         </div>

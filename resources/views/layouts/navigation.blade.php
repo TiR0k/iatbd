@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.index')">
                         {{ __('Pets') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
+                        {{ __('Requests') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -28,7 +31,7 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div style="display: flex">
                                 @if(Auth::user()->image)
-                                    <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img" style="width: 20px; margin-right: 5px">
+                                    <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img" style="width: 20px; border-radius: 50%;  margin-right: 5px">
                                 @else
                                     <img src="{{url('images/default_profile.webp')}}" style="width: 20px; border-radius: 50%; margin-right: 5px">
                                 @endif
@@ -84,6 +87,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.index')">
+                {{ __('Pets') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
+                {{ __('Requests') }}
             </x-responsive-nav-link>
         </div>
 

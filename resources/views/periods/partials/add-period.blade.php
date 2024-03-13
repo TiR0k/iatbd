@@ -1,6 +1,6 @@
 <section class="space-y-6">
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form action="{{ route('periods.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('requests.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mt-5">
                 <x-input-label for="start_date" :value="__('Start Date')"/>

@@ -61,3 +61,4 @@
 <x-modal name="add-pet">
     @include('pets.partials.add-pet')
 </x-modal>
+

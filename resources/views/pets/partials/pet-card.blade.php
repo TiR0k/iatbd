@@ -1,5 +1,24 @@
 <section class="shadow pet-card" >
     <link href="{{ asset('css/petCard.css') }}" rel="stylesheet" type="text/css">
+    <div class="flex justify-end">
+        @if ($pet->user->is(auth()->user()))
+            <x-dropdown >
+                <x-slot name="trigger" style="display: flex !important; justify-content: end">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                        </svg>
+                    </button>
+                </x-slot>
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('pets.edit', $pet)">
+                        {{ __('Edit Pet') }}
+                    </x-dropdown-link>
+                </x-slot>
+            </x-dropdown>
+        @endif
+    </div>
+
     <div class="flex">
         @if($pet->pet_image)
             <img class="petImg shadow" src="{{url('storage/' . $pet->pet_image)}}" alt="pet img">
@@ -20,3 +39,7 @@
         <p>{{$pet->description}}</p>
     </div>
 </section>
+
+<x-modal name="edit-pet">
+    @include('pets.partials.edit-pet')
+</x-modal>

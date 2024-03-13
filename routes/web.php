@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::get('/dashboard', function () {
@@ -43,10 +43,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('pets', PetController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'edit', 'update'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('periods', PeriodController::class)
+Route::resource('requests', PeriodController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 

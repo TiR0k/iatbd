@@ -61,9 +61,13 @@ class PetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pet $pet)
+    public function edit(Pet $pet): View
     {
-        //
+        $this->authorize('update', $pet);
+
+        return \view("pets/partials/edit-pet",[
+        'pet' => $pet,
+        ]);
     }
 
     /**
@@ -71,7 +75,20 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
-        //
+        $this->authorize('update', $pet);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:50',
+            'age' => 'required|numeric',
+            'difficulty' => 'required|string|max:50',
+            'type' => 'required|string|max:50',
+            'description' => 'required|string|max:50',
+            'pet_image' => 'image',
+        ]);
+
+        $pet->update($validated);
+
+        return redirect('/user/' . $pet->user->id);
     }
 
     /**
