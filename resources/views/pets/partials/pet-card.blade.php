@@ -1,6 +1,6 @@
 <section class="shadow pet-card" >
     <link href="{{ asset('css/petCard.css') }}" rel="stylesheet" type="text/css">
-    <div class="flex justify-end">
+        <div class="flex justify-end">
         @if ($pet->user->is(auth()->user()))
             <x-dropdown >
                 <x-slot name="trigger" style="display: flex !important; justify-content: end">
@@ -14,6 +14,13 @@
                     <x-dropdown-link :href="route('pets.edit', $pet)">
                         {{ __('Edit Pet') }}
                     </x-dropdown-link>
+                    <form method="POST" action="{{ route('pets.destroy', $pet) }}">
+                        @csrf
+                        @method('delete')
+                        <x-dropdown-link :href="route('pets.destroy', $pet)" onclick="event.preventDefault(); this.closest('form').submit();" style="color: red">
+                            {{ __('Delete') }}
+                        </x-dropdown-link>
+                    </form>
                 </x-slot>
             </x-dropdown>
         @endif

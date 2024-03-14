@@ -88,14 +88,18 @@ class PetController extends Controller
 
         $pet->update($validated);
 
-        return redirect('/user/' . $pet->user->id);
+        return redirect('/user/' . $request->user()->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pet $pet)
+    public function destroy(Request $request, Pet $pet)
     {
-        //
+        $this->authorize('delete', $pet);
+
+        $pet->delete();
+
+        return redirect('/user/' . $request->user()->id);
     }
 }

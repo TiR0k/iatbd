@@ -20,6 +20,8 @@
             <div class="bg-white shadow-sm rounded-lg divide-y">
                 <div class="p-6 flex space-x-2">
                     <div>
+                        <input type="hidden" name="id" value="{{$period->id}}" />
+
                         <div class="flex mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100"
                                  fill="none"
@@ -27,7 +29,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                             </svg>
-                            <div class="flex justify-between items-center">
+                            <div class="flex">
                                 <div>
                                     <a class="text-gray-800"
                                        href="/user/{{$period->user->id}}">{{ $period->user->name }}</a>
@@ -35,7 +37,35 @@
                                         class="ml-2 text-sm text-gray-600">{{ $period->created_at->format('j M Y, g:i a') }}</small>
                                 </div>
                             </div>
+                            @if ($period->user->is(auth()->user()))
+                                <x-dropdown>
+                                    <x-slot name="trigger">
+                                        <button >
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="h-4 w-4 text-gray-400"
+                                                 viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                            </svg>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-dropdown-link
+                                            x-on:click.prevent="$dispatch('open-modal', 'edit-period-{{$period->id}}')">
+                                            {{ __('Edit Request') }}
+                                        </x-dropdown-link>
+                                        <form method="POST" action="{{ route('requests.destroy', $period) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-dropdown-link :href="route('requests.destroy', $period)" onclick="event.preventDefault(); this.closest('form').submit();" style="color: red">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </form>
+                                    </x-slot>
+                                </x-dropdown>
+                            @endif
                         </div>
+
                         <div style="margin-left: 25px">
                             <h2 class="text-gray-800 leading-tight name">
                                 Requested Period: <b>{{$period->start_date->format('d-m-Y')}}
@@ -48,10 +78,12 @@
                                 @if($pet->id === $period->pet_id)
                                     <div class="flex">
                                         @if($pet->pet_image)
-                                            <img class="shadow" src="{{url('storage/' . $pet->pet_image)}}" alt="pet img"
+                                            <img class="shadow" src="{{url('storage/' . $pet->pet_image)}}"
+                                                 alt="pet img"
                                                  style="border-radius: 50%; aspect-ratio: 1/1; object-fit: cover; width: 100px;">
                                         @else
-                                            <img class="shadow" src="{{url('images/default_profile.webp')}}" alt="pet img"
+                                            <img class="shadow" src="{{url('images/default_profile.webp')}}"
+                                                 alt="pet img"
                                                  style="border-radius: 50%; aspect-ratio: 1/1; object-fit: cover; width: 100px;">
                                         @endif
                                         <div class="pet-info ml-4">
@@ -75,11 +107,15 @@
                 </div>
             </div>
         </div>
+
+        <x-modal name="edit-period-{{$period->id}}">
+            @include('periods.partials.edit-period', $period)
+        </x-modal>
     @endforeach
 
 
     <x-modal name="add-period">
         @include('periods.partials.add-period')
     </x-modal>
+
 </x-app-layout>
-<?php

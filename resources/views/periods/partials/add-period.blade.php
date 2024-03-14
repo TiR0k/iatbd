@@ -46,13 +46,10 @@
     let endDate = document.getElementById("end_date");
 
     startDate.onchange = () =>{
-        console.log(startDate.value)
         if(startDate.value !== ""){
             endDate.min = startDate.value;
         }else{
             endDate.min = startDate.min;
         }
     }
-
-    console.log("A change is gonna come")
 </script>

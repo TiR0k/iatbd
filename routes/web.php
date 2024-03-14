@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -43,11 +43,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('pets', PetController::class)
-    ->only(['index', 'store', 'edit', 'update'])
+    ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::resource('requests', PeriodController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
