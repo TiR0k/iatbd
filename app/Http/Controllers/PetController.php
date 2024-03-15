@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Period;
 use App\Models\Pet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class PetController extends Controller
             $validated['pet_image'] = $imagePath;
         }
         $request->user()->pets()->create($validated);
-        return redirect(route('pets.index'));
+
+        return redirect('/user/' . $request->user()->id);
     }
 
     /**
@@ -65,8 +67,8 @@ class PetController extends Controller
     {
         $this->authorize('update', $pet);
 
-        return \view("pets/partials/edit-pet",[
-        'pet' => $pet,
+        return \view("pets/partials/edit-pet", [
+            'pet' => $pet,
         ]);
     }
 
@@ -82,7 +84,7 @@ class PetController extends Controller
             'age' => 'required|numeric',
             'difficulty' => 'required|string|max:50',
             'type' => 'required|string|max:50',
-            'description' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
             'pet_image' => 'image',
         ]);
 
@@ -97,7 +99,12 @@ class PetController extends Controller
     public function destroy(Request $request, Pet $pet)
     {
         $this->authorize('delete', $pet);
+        $periods = Period::where('pet_id', $pet->id)->get();
 
+        foreach ($periods as $period) {
+            $this->authorize('delete', $period);
+            $period->delete();
+        }
         $pet->delete();
 
         return redirect('/user/' . $request->user()->id);

@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/avatar', [ProfileController::class, 'addAvatar'])->name('profile.addAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/profile/avatarDelete', [ProfileController::class, 'deleteAvatar'])->name('profile.deleteAvatar');
+    Route::patch('/profile/addDescription', [ProfileController::class, 'addDescription'])->name('profile.addDescription');
 });
 
 Route::resource('pets', PetController::class)

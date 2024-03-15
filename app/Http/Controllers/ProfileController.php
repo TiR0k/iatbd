@@ -88,4 +88,15 @@ class ProfileController extends Controller
         }
         return Redirect::route('profile.edit')->with('status', 'image-deleted');
     }
+
+    public function addDescription(Request $request): RedirectResponse
+    {
+        $validated = request()->validate([
+            'description' => 'required|string|max:255',
+        ]);
+
+        $request->user()->update($validated);
+
+        return redirect('/user/' . $request->user()->id);
+    }
 }

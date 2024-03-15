@@ -11,7 +11,8 @@
                 <h1 class="text-gray-800 leading-tight">
                     {{$user->name}}
                 </h1>
-                <p>Hier komt een gezellig stukje informatie over de gebruiker</p>
+
+                <p>{{$user->description != null ? $user->description : 'User has no description'}}</p>
             </div>
         </div>
     </x-slot>
