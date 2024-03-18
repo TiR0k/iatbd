@@ -1,5 +1,8 @@
 <div>
-    <form method="POST" action="{{ route('profile.addDescription', $user) }}">
+    <h2 class="text-lg font-medium text-gray-900">
+        {{ __('User Description') }}
+    </h2>
+    <form method="POST" action="{{ route('profile.addDescription', $user) }}" class="mt-4">
         @csrf
         @method('patch')
         <textarea name="description" class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ $user->description != null ? old('message', $user->description) : "Tell us about yourself"}}</textarea>

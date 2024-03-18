@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Period;
 use App\Models\Pet;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,7 @@ class PeriodController extends Controller
 
         return view('periods.index', [
             'periods' => Period::with('user')->latest()->get(),
-            'pets' => $request->user()->pets()->get(),
+            'pets' => Pet::with('user')->latest()->get(),
         ]);
     }
 

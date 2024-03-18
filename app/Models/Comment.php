@@ -6,21 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Period extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'pet_id',
-        'start_date',
-        'end_date',
-        'hourly_wage'
-    ];
-
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-        'hourly-wage' => 'float'
+        'period_id',
+        'message',
     ];
 
     public function user(): BelongsTo

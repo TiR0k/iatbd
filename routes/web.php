@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,10 @@ Route::resource('pets', PetController::class)
 
 Route::resource('requests', PeriodController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('comments', CommentController::class)
+    ->only(['index','store'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

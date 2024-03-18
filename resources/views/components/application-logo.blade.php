@@ -14,6 +14,6 @@
             </g>
         </g>
     </svg>
-    <span>PasOpJeDier.nl</span>
+    <span><b>PassenOpJeDier.nl</b></span>
 </div>
 

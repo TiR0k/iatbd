@@ -31,9 +31,9 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div style="display: flex">
                                 @if(Auth::user()->image)
-                                    <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img" style="width: 20px; border-radius: 50%;  margin-right: 5px">
+                                    <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img" style="width: 20px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                                 @else
-                                    <img src="{{url('images/default_profile.webp')}}" style="width: 20px; border-radius: 50%; margin-right: 5px">
+                                    <img src="{{url('images/default_profile.webp')}}" style="width: 20px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                                 @endif
                                 {{ Auth::user()->name }}
                             </div>
