@@ -107,6 +107,7 @@
                     </div>
                 </div>
             </div>
+            <p class="text-gray-600">Comments</p>
             <div hidden>
                 {{$comments = App\Models\Comment::where('period_id', $period->id)->get() != null ? App\Models\Comment::where('period_id', $period->id)->get() : null}}
             </div>
@@ -114,53 +115,59 @@
                 <div class="max-w-2xl mx-auto mt-1">
                     <div class="bg-white shadow-sm rounded-lg p-4 flex-col" style="width: 92%; margin-left: 8%">
                         <div class="flex">
-                            @if($comment->user->image)
-                                <img src="{{url('storage/' . $comment->user->image)}}" alt="profile img"
-                                     style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
-                            @else
-                                <img src="{{url('images/default_profile.webp')}}" alt="profile img"
-                                     style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
-                            @endif
-                            <div class="flex">
-                                <div>
-                                    <a class="text-gray-800"
-                                       href="/user/{{$comment->user->id}}">{{ $comment->user->name }}</a>
-                                    <small class="ml-2 text-sm text-gray-600">{{ $comment->created_at->format('j M Y, g:i a') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                        <p style="margin-left: 50px">
-                            {{$comment->message}}
-                        </p>
-                    </div>
-                </div>
-                    @endforeach
-                    <div>
-                        <form action="{{ route('comments.store') }}" method="POST">
-                            @csrf
-                            @method('POST')
-                            <div class="flex max-w-2xl mx-auto mt-2">
-                                @if(Auth::user()->image)
-                                    <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img"
-                                         style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
+                            <div>
+
+                                @if($comment->user->image)
+                                    <img src="{{url('storage/' . $comment->user->image)}}" alt="profile img"
+                                         style="width: 45px; max-width: 50px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                                 @else
                                     <img src="{{url('images/default_profile.webp')}}" alt="profile img"
                                          style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                                 @endif
-                                <input class="shadow-sm rounded-lg" style=" width: 100%" id="comment" name="message"
-                                       type="text" placeholder="Leave a reply">
-                                <input hidden name="period_id" type="number" value="{{$period->id}}">
                             </div>
-                            <div class="flex max-w-2xl mx-auto mt-2 justify-end">
-                                <x-primary-button type="submit">{{ __('Reply') }}</x-primary-button>
+                            <div class="flex-col ml-2">
+                                <div class="flex gap-2 align-baseline">
+                                    <a class="text-gray-800"
+                                       href="/user/{{$comment->user->id}}">{{ $comment->user->name }}</a>
+                                    <small
+                                        class="text-sm text-gray-600">{{ $comment->created_at->format('j M Y, g:i a') }}</small>
+                                </div>
+                                <p style="font-size: 20px">
+                                    {{$comment->message}}
+                                </p>
                             </div>
-                        </form>
+                        </div>
 
                     </div>
+                </div>
+            @endforeach
+            <div>
+                <form action="{{ route('comments.store') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <div class="flex max-w-2xl mx-auto mt-2">
+                        @if(Auth::user()->image)
+                            <img src="{{url('storage/' . Auth::user()->image)}}" alt="profile img"
+                                 style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
+                        @else
+                            <img src="{{url('images/default_profile.webp')}}" alt="profile img"
+                                 style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
+                        @endif
+                        <input class="shadow-sm rounded-lg" style="width: 100%" id="comment" name="message"
+                               type="text" placeholder="Leave a reply">
+                        <input hidden name="period_id" type="number" value="{{$period->id}}">
+                    </div>
+                    <div class="flex max-w-2xl mx-auto mt-2 justify-end">
+                        <x-primary-button type="submit"
+                                          onkeydown="return event.key !== 'Enter'">{{ __('Reply') }}</x-primary-button>
+                    </div>
+                </form>
 
-                <x-modal name="edit-period-{{$period->id}}">
-                    @include('periods.partials.edit-period', $period)
-                </x-modal>
+            </div>
+
+            <x-modal name="edit-period-{{$period->id}}">
+                @include('periods.partials.edit-period', $period)
+            </x-modal>
             @endforeach
 
 
