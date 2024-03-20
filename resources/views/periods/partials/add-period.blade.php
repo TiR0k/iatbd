@@ -40,7 +40,7 @@
                 <x-secondary-button class="mt-4" x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
                 </x-secondary-button>
-                <x-primary-button class="mt-4" type="submit">{{ __('Add Pet') }}</x-primary-button>
+                <x-primary-button class="mt-4" type="submit">{{ __('Add Request') }}</x-primary-button>
             </div>
         </form>
     </div>

@@ -50,7 +50,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comment $comment)
+    public function edit(Comment $comment): bool
     {
         //
     }
@@ -60,7 +60,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+            
+        $comment->update($validated);
+
+        return redirect(route('requests.index'));
     }
 
     /**
