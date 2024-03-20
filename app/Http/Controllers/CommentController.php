@@ -63,7 +63,7 @@ class CommentController extends Controller
         $validated = $request->validate([
             'message' => 'required|string|max:255',
         ]);
-            
+
         $comment->update($validated);
 
         return redirect(route('requests.index'));

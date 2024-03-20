@@ -30,8 +30,9 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link x-on:click.prevent="$dispatch('open-modal', 'edit-comment-{{$comment->id}}')"
-                                    >
+                                <x-dropdown-link
+                                    x-on:click.prevent="$dispatch('open-modal', 'edit-comment-{{$comment->id}}')"
+                                >
                                     {{ __('Edit') }}
                                 </x-dropdown-link>
                                 <form method="POST" action="{{ route('comments.destroy', $comment) }}">
@@ -56,5 +57,5 @@
 </div>
 
 <x-modal name="edit-comment-{{$comment->id}}">
-    @include('periods.partials.edit-comment', $comment)
+    @include('comments.edit-comment', $comment)
 </x-modal>
