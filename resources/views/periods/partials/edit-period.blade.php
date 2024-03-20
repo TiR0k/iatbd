@@ -1,17 +1,18 @@
 <section class="space-y-6">
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8" x-init="$watch('show', open => {
+  check(open, $el)
+})">
         <form action="{{ route('requests.update', $period) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="mt-5">
                 <x-input-label for="start_date" :value="__('Start Date')"/>
-                <x-text-input value="{{ old('start_date', $period->start_date->format('Y-m-d'))}}" id="start_date" name="start_date" type="date" min="{{date('Y-m-d')}}" class="mt-1 block w-full"/>
+                <x-text-input value="{{ old('start_date', $period->start_date->format('Y-m-d'))}}" name="start_date" type="date" min="{{date('Y-m-d')}}"  onChange="changeStart(this)" class="mt-1 block w-full"/>
             </div>
 
-            <p>{{$period->start_date}}</p>
             <div class="mt-5">
                 <x-input-label for="end_date" :value="__('End Date')"/>
-                <x-text-input value="{{ old('end_date', $period->end_date->format('Y-m-d'))}}" id="end_date" name="end_date" type="date" min="{{date('Y-m-d')}}" class="mt-1 block w-full"/>
+                <x-text-input value="{{ old('end_date', $period->end_date->format('Y-m-d'))}}" name="end_date" type="date" min="{{date('Y-m-d')}}" class="end_date mt-1 block w-full"/>
             </div>
 
             <div class="mt-5" style="display: flex; flex-direction: column">
@@ -40,16 +41,3 @@
         </form>
     </div>
 </section>
-
-<script>
-    let startDate = document.getElementById("start_date")
-    let endDate = document.getElementById("end_date");
-
-    startDate.onchange = () =>{
-        if(startDate.value !== ""){
-            endDate.min = startDate.value;
-        }else{
-            endDate.min = startDate.min;
-        }
-    }
-</script>

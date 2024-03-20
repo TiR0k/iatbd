@@ -53,7 +53,7 @@ Route::resource('requests', PeriodController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('comments', CommentController::class)
-    ->only(['index','store'])
+    ->only(['index','store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

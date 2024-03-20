@@ -116,7 +116,6 @@
                     <div class="bg-white shadow-sm rounded-lg p-4 flex-col" style="width: 92%; margin-left: 8%">
                         <div class="flex">
                             <div>
-
                                 @if($comment->user->image)
                                     <img src="{{url('storage/' . $comment->user->image)}}" alt="profile img"
                                          style="width: 45px; max-width: 50px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
@@ -171,8 +170,21 @@
             @endforeach
 
 
-            <x-modal name="add-period">
+            <x-modal id="modal_add" name="add-period" onopen="check">
                 @include('periods.partials.add-period')
             </x-modal>
-
 </x-app-layout>
+<script>
+    let endDate;
+    const check = (open, element) => {
+        endDate = element.getElementsByClassName("end_date")[0]
+    }
+
+    const changeStart = (startDate) => {
+        if (startDate.value !== "") {
+            endDate.setAttribute("min", startDate.value);
+        } else {
+            endDate.setAttribute("min", startDate.min);
+        }
+    }
+</script>
