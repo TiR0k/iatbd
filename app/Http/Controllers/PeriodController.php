@@ -16,9 +16,8 @@ class PeriodController extends Controller
      */
     public function index(Request $request): View
     {
-
         return view('periods.index', [
-            'periods' => Period::with('user')->latest()->get(),
+            'periods' => Period::with('user')->latest()->get()->where('assigned_to_id', null),
             'pets' => Pet::with('user')->latest()->get(),
         ]);
     }
@@ -96,4 +95,19 @@ class PeriodController extends Controller
 
         return redirect(route('requests.index'));
     }
+
+    public function assignTo(Request $request): RedirectResponse
+    {
+
+        $period = Period::find($request['period_id']);
+
+        $validated = request()->validate([
+            'assigned_to_id' => 'required|numeric',
+        ]);
+
+        $period->update($validated);
+
+        return redirect(route('requests.index'));
+    }
+
 }

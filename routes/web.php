@@ -49,7 +49,10 @@ Route::resource('pets', PetController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('requests', PeriodController::class)
-    ->only(['index', 'store', 'edit', 'update', 'destroy'])
+    ->only(['index', 'store', 'edit', 'update', 'destroy', 'assignTo'])
+    ->middleware(['auth', 'verified']);
+
+Route::patch('/requests.assignTo', [PeriodController::class, 'assignTo'])->name('requests.assignTo')
     ->middleware(['auth', 'verified']);
 
 Route::resource('comments', CommentController::class)

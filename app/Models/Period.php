@@ -14,13 +14,15 @@ class Period extends Model
         'pet_id',
         'start_date',
         'end_date',
-        'hourly_wage'
+        'hourly_wage',
+        'assigned_to_id'
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'hourly-wage' => 'float'
+        'hourly-wage' => 'float',
+        'assigned_to_id' => 'integer'
     ];
 
     public function user(): BelongsTo

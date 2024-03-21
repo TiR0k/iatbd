@@ -21,8 +21,12 @@
                             @unless ($comment->created_at->eq($comment->updated_at))
                                 <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                             @endunless
+                            @if($comment->user_id === $period->assigned_to_id)
+                                <small class="text-sm text-gray-600"> &middot; {{ __('Assigned to this user') }}</small>
+                            @endif
                         </div>
-                        @if ($comment->user->is(auth()->user()))
+
+                        @if ($comment->user->is(auth()->user()) || $period->user->is(auth()->user()))
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button>
@@ -36,21 +40,38 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link
-                                        x-on:click.prevent="$dispatch('open-modal', 'edit-comment-{{$comment->id}}')">
-                                        {{ __('Edit') }}
-                                    </x-dropdown-link>
-                                    <form method="POST" action="{{ route('comments.destroy', $comment) }}">
-                                        @csrf
-                                        @method('delete')
-                                        <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();"
-                                                         style="color: red">
-                                            {{ __('Delete') }}
+                                    @if($period->user->is(auth()->user()) && $comment->user->isnot(auth()->user()))
+                                        <form method="POST" action="{{ route('requests.assignTo') }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input name="assigned_to_id" value="{{$comment->user_id}}" hidden/>
+                                            <input name="period_id" value="{{$period->id}}" hidden/>
+                                            <x-dropdown-link :href="route('requests.assignTo')"
+                                                             onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Assign to this user') }}
+                                            </x-dropdown-link>
+                                        </form>
+                                    @endunless
+                                    @if ($comment->user->is(auth()->user()))
+                                        <x-dropdown-link
+                                            x-on:click.prevent="$dispatch('open-modal', 'edit-comment-{{$comment->id}}')">
+                                            {{ __('Edit') }}
                                         </x-dropdown-link>
-                                    </form>
+                                        <form method="POST" action="{{ route('comments.destroy', $comment) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-dropdown-link
+                                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                                style="color: red">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </form>
+                                    @endif
+
                                 </x-slot>
                             </x-dropdown>
                         @endif
+
                     </div>
 
                     <p style="font-size: 20px">
