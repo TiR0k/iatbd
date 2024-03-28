@@ -11,7 +11,7 @@
             @method('patch')
             <input type="file" name="image">
             @if(auth()->user()->image !== null)
-                <img style="width: 100px; border-radius: 50%" src={{ url('storage/'. auth()->user()->image) }} alt="img" />
+                <img style="width: 100px; border-radius: 50%; aspect-ratio: 1/1; object-fit: cover;" src={{ url('storage/'. auth()->user()->image) }} alt="img" />
             @endif
             <div>
                 <x-primary-button type="submit">Upload</x-primary-button>

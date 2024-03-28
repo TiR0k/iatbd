@@ -1,12 +1,17 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
+use App\Models\Period;
 use App\Models\Pet;
+use App\Models\Review;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,18 +25,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified']);
+//Route::get('/', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified']);
+//
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 Route::get('/user/{id}', function (Request $request, string $id) {
     return view('/profile.detail', [
         'user' => User::where('id', $id)->firstOrFail(),
-        'pets' => Pet::where('user_id', $id)->get()
+        'pets' => Pet::where('user_id', $id)->get(),
+        'jobs' => Period::where('assigned_to_id', $id)->get(),
+        'requests' => Period::where('user_id', $id)->get(),
+        'rating' => DB::table('reviews')
+            ->leftJoin('periods', 'reviews.period_id', '=', 'periods.id')
+            ->leftJoin('users', 'periods.assigned_to_id', '=', 'users.id')
+            ->where('users.id', '=', $id)
+            ->where('reviews.rating', '!=', null)
+            ->avg('reviews.rating'),
+        'review_amount' => DB::table('reviews')
+            ->leftJoin('periods', 'reviews.period_id', '=', 'periods.id')
+            ->leftJoin('users', 'periods.assigned_to_id', '=', 'users.id')
+            ->where('users.id', '=', $id)
+            ->where('reviews.rating', '!=', null)
+            ->count('reviews.rating'),
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('/user/{id}/reviews', function (Request $request, string $id) {
+    return view('/profile/partials/reviews', [
+        'user' => User::where('id', $id)->firstOrFail(),
+        'reviews' => DB::table('reviews')
+            ->leftJoin('periods', 'reviews.period_id', '=', 'periods.id')
+            ->leftJoin('users', 'periods.assigned_to_id', '=', 'users.id')
+            ->where('users.id', '=', $id)
+            ->where('reviews.rating', '!=', null)
+            ->get(),
     ]);
 })->middleware(['auth', 'verified']);
 
@@ -57,6 +93,10 @@ Route::patch('/requests.assignTo', [PeriodController::class, 'assignTo'])->name(
 
 Route::resource('comments', CommentController::class)
     ->only(['index','store', 'edit', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('reviews', ReviewController::class)
+    ->only(['index, update'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

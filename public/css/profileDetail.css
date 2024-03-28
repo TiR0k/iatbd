@@ -1,7 +1,6 @@
 .info{
     display:flex;
     flex-direction: row;
-
 }
 
 .profileImg{
@@ -27,7 +26,3 @@
     max-width: 300px;
 }
 
-h2{
-    font-weight: bold;
-    font-size: 20px;
-}

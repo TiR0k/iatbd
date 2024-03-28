@@ -14,7 +14,7 @@ class PeriodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(): View
     {
         return view('periods.index', [
             'periods' => Period::with('user')->latest()->get()->where('assigned_to_id', null),
@@ -33,7 +33,7 @@ class PeriodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'pet_id' => 'required|numeric',
@@ -42,7 +42,8 @@ class PeriodController extends Controller
             'hourly_wage' => 'required|numeric'
         ]);
 
-        $request->user()->periods()->create($validated);
+        $newPeriod = $request->user()->periods()->create($validated);
+        $newPeriod->reviews()->create();
 
         return redirect(route('requests.index'));
     }
