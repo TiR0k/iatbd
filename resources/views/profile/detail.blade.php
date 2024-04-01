@@ -21,20 +21,20 @@
                     @foreach(range(1,5) as $i)
                         <span class="fa-stack" style="width:1em; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);">
                         <i class="fas fa-star fa-stack-1x" style="color: #ddd"></i>
-                    @if($rating_dupe != null)
+                        @if($rating_dupe != null)
                                 @if($rating_dupe >0.5)
                                     <i class="fas fa-star fa-stack-1x" style="color: #FFD700"></i>
-                                @else
+                                @elseif($rating_dupe <= 0.5 && $rating_dupe > 0)
                                     <i class="fas fa-star-half fa-stack-1x"
                                        style="color: #FFD700; text-shadow: none;"></i>
                                 @endif
                                 @php $rating_dupe--; @endphp
-
                             @endif
                         </span>
                     @endforeach
                     <span class="align-sub ml-2" style="color: #1a202c">{{$rating}} rating </span>
-                    <a href="/user/{{$user->id}}/reviews" class="align-sub" style="color: gray">of {{$review_amount}} reviews</a><br>
+                    <a href="/user/{{$user->id}}/reviews" class="align-sub" style="color: gray">of {{$review_amount}}
+                        reviews</a><br>
                 </div>
 
             </div>
@@ -52,8 +52,8 @@
                     @if($user->is(auth()->user()))
                         <div>
                             <x-primary-button
-                                x-data=""
-                                x-on:click.prevent="$dispatch('open-modal', 'add-pet')"
+                                    x-data=""
+                                    x-on:click.prevent="$dispatch('open-modal', 'add-pet')"
                             >{{ __('Add Pet') }}</x-primary-button>
                         </div>
                     @endIf

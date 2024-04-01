@@ -22,11 +22,12 @@ class DashboardController extends Controller
             'periods_current' => Period::where('user_id', $user_id)->where('end_date', '>=' , date('Y-m-d'))->get(),
             'jobs_current' => Period::where('assigned_to_id', $user_id)->where('end_date', '>=' , date('Y-m-d'))->get(),
             'reviews' => DB::table('reviews')
-                ->leftJoin('periods', 'reviews.period_id', '=', 'periods.id')
-                ->leftJoin('users', 'periods.assigned_to_id', '=', 'users.id')
-                ->where('reviews.rating', '=', null)
+                ->select('reviews.id', 'reviews.rating', 'reviews.review', 'users.name', 'users.image', 'users.id as user_id')
+                ->join('periods', 'reviews.period_id', '=', 'periods.id')
+                ->join('users', 'periods.assigned_to_id', '=', 'users.id')
                 ->where('periods.assigned_to_id', '!=', null)
                 ->where('periods.end_date', '<', date('Y-m-d'))
+                ->where('reviews.rating', '=', null)
                 ->get()
         ]);
     }

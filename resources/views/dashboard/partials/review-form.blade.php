@@ -13,7 +13,7 @@
             </div>
             <div class="flex-1">
                 <a class="text-gray-800"
-                   href="/user/{{$review->id}}">{{ $review->name }}</a>
+                   href="/user/{{$review->user_id}}">{{ $review->name }}</a>
             </div>
         </div>
         <div>

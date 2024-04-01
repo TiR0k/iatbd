@@ -63,9 +63,10 @@ Route::get('/user/{id}/reviews', function (Request $request, string $id) {
     return view('/profile/partials/reviews', [
         'user' => User::where('id', $id)->firstOrFail(),
         'reviews' => DB::table('reviews')
-            ->leftJoin('periods', 'reviews.period_id', '=', 'periods.id')
-            ->leftJoin('users', 'periods.assigned_to_id', '=', 'users.id')
-            ->where('users.id', '=', $id)
+            ->select('reviews.id', 'reviews.rating', 'reviews.review', 'reviews.updated_at', 'users.name', 'users.image', 'users.id as user_id')
+            ->join('periods', 'reviews.period_id', '=', 'periods.id')
+            ->join('users', 'periods.user_id', '=', 'users.id')
+            ->where('periods.assigned_to_id', '=', $id)
             ->where('reviews.rating', '!=', null)
             ->get(),
     ]);
@@ -96,7 +97,7 @@ Route::resource('comments', CommentController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('reviews', ReviewController::class)
-    ->only(['index, update'])
+    ->only(['index', 'update'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

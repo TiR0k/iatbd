@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -50,11 +51,11 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Review $review): RedirectResponse
     {
         $validated = $request->validate([
             'rating' => 'required|numeric',
-            'review' => 'string|max:255',
+            'review' => 'nullable|string|max:255',
         ]);
         $review->update($validated);
 

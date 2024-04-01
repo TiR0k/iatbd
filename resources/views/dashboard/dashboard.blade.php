@@ -12,7 +12,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg justify-around">
                 <div class="p-6 text-gray-900">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        Current and Upcomming Jobs
+                        Write a Review
                     </h2>
                     <div class="flex gap-5" style="overflow-x: scroll; min-width: 100%; max-width: 100%;padding: 5px">
                         <div class="flex gap-5"

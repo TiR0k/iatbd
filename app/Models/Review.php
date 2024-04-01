@@ -14,6 +14,9 @@ class Review extends Model
         'rating',
         'review',
     ];
+    protected $dates = [
+        'updated_at'
+    ];
 
     public function Period(): BelongsTo
     {
