@@ -5,19 +5,20 @@
 
             <div class="mt-5">
                 <x-input-label for="pet_image" :value="__('Upload Foto')"/>
-                <input type="file" name="pet_image" id="selectImage" required>
-
-                <img id="preview" src="#" alt="your image" class="mt-3"
+                <input type="file" name="pet_image" id="imageInput" required>
+                <img id="preview" src="#" alt="your image" class="mt-3 shadow"
                      style="display:none; width: 100px; border-radius: 50%; aspect-ratio: 1 / 1; object-fit: cover;"/>
                 <script>
-                    selectImage.onchange = evt => {
-                        preview = document.getElementById('preview');
-                        preview.style.display = 'block';
-                        const [file] = selectImage.files
+                    const imageInput = document.querySelector('.add-pet-modal #imageInput')
+                    change = () => {
+                        const [file] = imageInput.files;
                         if (file) {
+                            let preview = document.querySelector('.add-pet-modal #preview');
                             preview.src = URL.createObjectURL(file)
+                            preview.style.display = 'block';
                         }
                     }
+                    imageInput.addEventListener('change', change)
                 </script>
             </div>
 

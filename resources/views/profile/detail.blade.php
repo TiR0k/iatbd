@@ -70,7 +70,19 @@
             </div>
 
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Home</h2>
+                <div class="flex justify-between">
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        Home
+                    </h2>
+                    @if($user->is(auth()->user()))
+                        <div>
+                            <x-primary-button
+                                x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'add-images')"
+                            >{{ __('Add Images') }}</x-primary-button>
+                        </div>
+                    @endIf
+                </div>
                 @if($user->is(auth()->user()))
                     <p>Show others your home to make sure it's pet safe</p>
                 @else
@@ -117,9 +129,15 @@
 
         </div>
     </div>
+
+    <x-modal name="add-images" >
+
+        @include('profile.partials.add-images')
+    </x-modal>
 </x-app-layout>
 
 <x-modal name="add-pet">
     @include('pets.partials.add-pet')
 </x-modal>
+
 
