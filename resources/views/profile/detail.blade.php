@@ -7,16 +7,15 @@
             @else
                 <img class=profileImg src="{{url('images/default_profile.webp')}}">
             @endif
+
             <div style="height: 100%">
                 <h1 class="text-gray-800 leading-tight">
                     {{$user->name}}
                 </h1>
                 <p>{{$user->description != null ? $user->description : 'User has no description'}}</p>
-
                 <div hidden>
                     {{$rating_dupe = $rating}}
                 </div>
-
                 <div class="mt-10">
                     @foreach(range(1,5) as $i)
                         <span class="fa-stack" style="width:1em; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);">
@@ -36,8 +35,42 @@
                     <a href="/user/{{$user->id}}/reviews" class="align-sub" style="color: gray">of {{$review_amount}}
                         reviews</a><br>
                 </div>
-
             </div>
+            @if (auth()->user()->role === 'admin')
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="h-4 w-4 text-gray-400"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"/>
+                            </svg>
+                        </button>
+                    </x-slot>
+                    <x-slot name="content">
+                        @if(!$user->status)
+                            <form method="POST" action="{{ route('profile.suspend', $user->id) }}">
+                                @csrf
+                                <input name="user_id" value="{{$user->id}}" hidden/>
+                                <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();"
+                                                 style="color: red">
+                                    {{ __('Suspend User') }}
+                                </x-dropdown-link>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('profile.suspend')}}">
+                                @csrf
+                                <input name="user_id" value="{{$user->id}}" hidden/>
+                                <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();"
+                                                 style="color: red">
+                                    {{ __('Unsuspend User') }}
+                                </x-dropdown-link>
+                            </form>
+                        @endif
+                    </x-slot>
+                </x-dropdown>
+            @endif
         </div>
     </x-slot>
 

@@ -36,7 +36,7 @@
                 <x-secondary-button class="mt-4" x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
                 </x-secondary-button>
-                <x-primary-button class="mt-4" type="submit">{{ __('Update Pet') }}</x-primary-button>
+                <x-primary-button class="mt-4" type="submit">{{ __('Update Period') }}</x-primary-button>
             </div>
         </form>
     </div>

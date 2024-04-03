@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('/profile/avatarDelete', [ProfileController::class, 'deleteAvatar'])->name('profile.deleteAvatar');
     Route::patch('/profile/addDescription', [ProfileController::class, 'addDescription'])->name('profile.addDescription');
+    Route::post('/profile/suspend', [ProfileController::class, 'suspend'])->name('profile.suspend');
 });
 
 Route::resource('pets', PetController::class)

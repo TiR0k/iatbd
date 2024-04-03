@@ -37,7 +37,7 @@ class PeriodPolicy
      */
     public function update(User $user, Period $period): bool
     {
-        return $period->user()->is($user);
+        return $period->user()->is($user) || auth()->user()->role === 'admin';
     }
 
     /**

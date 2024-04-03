@@ -29,6 +29,7 @@ class DashboardController extends Controller
                 ->where('periods.assigned_to_id', '!=', null)
                 ->where('periods.end_date', '<', date('Y-m-d'))
                 ->where('reviews.rating', '=', null)
+                ->where('periods.user_id', '=', $user_id)
                 ->get()
         ]);
     }

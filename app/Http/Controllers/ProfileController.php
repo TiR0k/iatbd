@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -98,5 +99,26 @@ class ProfileController extends Controller
         $request->user()->update($validated);
 
         return redirect('/user/' . $request->user()->id);
+    }
+
+    public function suspend(Request $request): RedirectResponse
+    {
+        $user = User::find($request['user_id']);
+
+        $validated = [
+            'status' => ['required', 'boolean'],
+        ];
+
+        if ($user->status !== null) {
+            $validated['status'] = !$user->status;
+        } else {
+            $validated['status'] = 1;
+        }
+//        dd($user->status);
+
+        $user->update($validated);
+
+
+        return redirect('/user/' . $user->id);
     }
 }
