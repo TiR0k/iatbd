@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeImageController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
+use App\Models\HomeImage;
 use App\Models\Period;
 use App\Models\Pet;
 use App\Models\Review;
@@ -56,6 +58,9 @@ Route::get('/user/{id}', function (Request $request, string $id) {
             ->where('users.id', '=', $id)
             ->where('reviews.rating', '!=', null)
             ->count('reviews.rating'),
+        'home_images' => DB::table('home_images')
+        ->where('user_id', '=', $id)
+        ->get(),
     ]);
 })->middleware(['auth', 'verified']);
 
@@ -99,6 +104,10 @@ Route::resource('comments', CommentController::class)
 
 Route::resource('reviews', ReviewController::class)
     ->only(['index', 'update'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('homeImages', HomeImageController::class)
+    ->only('store')
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

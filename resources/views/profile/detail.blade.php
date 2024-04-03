@@ -52,8 +52,8 @@
                     @if($user->is(auth()->user()))
                         <div>
                             <x-primary-button
-                                    x-data=""
-                                    x-on:click.prevent="$dispatch('open-modal', 'add-pet')"
+                                x-data=""
+                                x-on:click.prevent="$dispatch('open-modal', 'add-pet')"
                             >{{ __('Add Pet') }}</x-primary-button>
                         </div>
                     @endIf
@@ -83,11 +83,20 @@
                         </div>
                     @endIf
                 </div>
-                @if($user->is(auth()->user()))
-                    <p>Show others your home to make sure it's pet safe</p>
-                @else
-                    <p class="text-gray-600">Nothing to show</p>
-                @endif
+                <div style="display: flex; flex-wrap: wrap; gap: 10px">
+                    @forelse($home_images as $home_image)
+                        <img src="{{url('storage/' . $home_image->home_image)}}" alt=""
+                             style="width: 200px; aspect-ratio: 1/1" class="shadow">
+                    @empty
+                        @if($user->is(auth()->user()))
+                            <p class="text-gray-600">Show others your home to make sure it's pet safe</p>
+                        @else
+                            <p class="text-gray-600">Nothing to show</p>
+                        @endif
+                    @endforelse
+                </div>
+
+
             </div>
 
             <div class="max-w-7xl mx-auto">
@@ -130,7 +139,7 @@
         </div>
     </div>
 
-    <x-modal name="add-images" >
+    <x-modal name="add-images">
 
         @include('profile.partials.add-images')
     </x-modal>
