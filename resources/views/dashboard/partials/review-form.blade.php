@@ -17,6 +17,14 @@
             </div>
         </div>
         <div>
+            <p>
+                <b>{{date('d-m-Y', strtotime($review->start_date))}} </b> - <b>{{date('d-m-Y', strtotime($review->end_date))}}</b>
+            </p>
+            <p>
+                <b>For: </b>{{$review->pet}}
+            </p>
+        </div>
+        <div>
             <form method="post" action="{{route('reviews.update', $review->id)}}">
                 @csrf
                 @method("PATCH")
@@ -56,7 +64,8 @@
                     <input class="rating__input" name="rating" id="rating2-50" value="5" type="radio">
                 </div>
                 <textarea name="review"
-                          class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-4" placeholder="Write Review"></textarea>
+                          class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-4"
+                          placeholder="Write Review"></textarea>
 
                 <div class="justify-end w-max flex">
                     <x-primary-button class="mt-4" type="submit">{{ __('Post') }}</x-primary-button>

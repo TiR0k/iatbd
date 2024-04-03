@@ -63,9 +63,10 @@ Route::get('/user/{id}/reviews', function (Request $request, string $id) {
     return view('/profile/partials/reviews', [
         'user' => User::where('id', $id)->firstOrFail(),
         'reviews' => DB::table('reviews')
-            ->select('reviews.id', 'reviews.rating', 'reviews.review', 'reviews.updated_at', 'users.name', 'users.image', 'users.id as user_id')
+            ->select('reviews.id', 'reviews.rating', 'reviews.review', 'reviews.updated_at', 'users.name', 'users.image', 'users.id as user_id', 'periods.start_date as start_date', 'periods.end_date as end_date', 'pets.name as pet')
             ->join('periods', 'reviews.period_id', '=', 'periods.id')
             ->join('users', 'periods.user_id', '=', 'users.id')
+            ->join('pets', 'periods.pet_id', '=', 'pets.id')
             ->where('periods.assigned_to_id', '=', $id)
             ->where('reviews.rating', '!=', null)
             ->get(),

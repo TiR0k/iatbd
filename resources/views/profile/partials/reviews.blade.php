@@ -19,15 +19,15 @@
 
     @foreach($reviews as $review)
         <div class="max-w-2xl mx-auto mt-6">
-            <div class="bg-white shadow-sm rounded-lg divide-y">
-                <div class="p-6">
+            <div class="bg-white shadow-sm rounded-lg divide-y p-6">
+                <div>
                     <div class="flex">
                         @if($review->image)
                             <img src="{{url('storage/' . $review->image)}}" alt="profile img"
-                                 style="width: 50px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
+                                 style="width: 55px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                         @else
                             <img src="{{url('images/default_profile.webp')}}" alt="profile img"
-                                 style="width: 50px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
+                                 style="width: 55px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                         @endif
                         <div class="flex-col">
                             <div class="flex-1">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="mt-2">
                         {{$review->review}}
                     </div>
                 </div>
