@@ -28,7 +28,8 @@
 
     <div class="flex">
         @if($pet->pet_image)
-            <img class="petImg shadow" src="{{url('storage/' . $pet->pet_image)}}" alt="pet img">
+{{--            <img class="petImg shadow" src="{{url('storage/' . $pet->pet_image)}}" alt="pet img">--}}
+            <img class="petImg shadow" src="{{url('storage/pets/N3JRTVU7jIj1lsqV2cKxMKTrXTtBH0h64U9UfbLy.webp')}}" alt="pet img">
         @else
             <img class="petImg shadow" src="{{url('images/default_profile.webp')}}">
         @endif

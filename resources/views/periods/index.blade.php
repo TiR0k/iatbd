@@ -1,6 +1,5 @@
 <x-app-layout>
-    <script type="text/javascript" src="{{URL::to('js/DateSelector.js')}}"></script>
-
+    {{--    <script type="text/javascript" src="{{URL::to('js/DateSelector.js')}}"></script>--}}
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
@@ -8,12 +7,44 @@
                     Requests
                 </h1>
             </div>
-            <div>
-                <x-primary-button
-                    x-data=""
-                    x-on:click.prevent="$dispatch('open-modal', 'add-period')"
-                >{{ __('Add Request') }}</x-primary-button>
+            <div class="flex gap-4">
+                <x-filter>
+                    <x-slot name="trigger">
+                        <x-secondary-button>FILTER REQUESTS <i class="fa fa-filter ml-2"></i></x-secondary-button>
+                    </x-slot>
+                    <x-slot name="content">
+                        <form action="{{ route('requests.index')}}">
+                            <div class="flex-col gap-4 mb-2">
+                                {{--                                {{dd($filterItems)}}--}}
+                                @foreach($filterItems as $filterItem)
+                                    @if($filterItem->name != "difficulty")
+                                        <div class="flex-col mb-4">
+                                            <label for="{{$filterItem->name}}">{{$filterItem->label}}</label>
+                                            <br>
+                                            <input type='{{$filterItem->type}}' name="{{$filterItem->name}}"
+                                                   class="rounded-md"/>
+                                        </div>
+                                    @endif
+                                    {{--                                    {{$filterItem->type}}--}}
+                                @endforeach
+                                {{--                                <input id='valueSelect' name="filterValue" type="date" placeholder="Value"/>`--}}
+
+                            </div>
+
+                            <x-primary-button type="submit">APPLY FILTER</x-primary-button>
+                        </form>
+
+                    </x-slot>
+
+                </x-filter>
+                <div>
+                    <x-primary-button
+                        x-data=""
+                        x-on:click.prevent="$dispatch('open-modal', 'add-period')"
+                    >{{ __('Add Request') }}</x-primary-button>
+                </div>
             </div>
+
         </div>
     </x-slot>
 
@@ -32,7 +63,7 @@
         </div>
 
         <x-modal name="edit-period-{{$period->id}}">
-            @include('periods.partials.edit-period', $period)
+            @include('periods.partials.edit-period')
         </x-modal>
     @endforeach
 

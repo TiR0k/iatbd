@@ -15,8 +15,6 @@
             @endif
             <div>
                 <x-primary-button type="submit">Upload</x-primary-button>
-
-
                 @if (session('status') === 'image-uploaded')
                     <p
                         x-data="{ show: true }"

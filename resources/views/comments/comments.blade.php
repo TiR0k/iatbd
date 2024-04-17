@@ -40,7 +40,7 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    @if($period->user->is(auth()->user()) && $comment->user->isnot(auth()->user()))
+                                    @if($period->user_name === auth()->user()->name && $comment->user->isnot(auth()->user()))
                                         <form method="POST" action="{{ route('requests.assignTo') }}">
                                             @csrf
                                             @method('PATCH')

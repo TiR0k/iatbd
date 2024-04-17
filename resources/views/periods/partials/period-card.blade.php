@@ -5,8 +5,8 @@
                 <input type="hidden" name="id" value="{{$period->id}}"/>
                 <div class="flex mb-4">
                     <div>
-                        @if($period->user->image)
-                            <img src="{{url('storage/' . $period->user->image)}}" alt="profile img"
+                        @if($period->user_image)
+                            <img src="{{url('storage/' . $period->user_image)}}" alt="profile img"
                                  style="width: 45px; border-radius: 50%;  margin-right: 5px; aspect-ratio: 1/1; object-fit: cover">
                         @else
                             <img src="{{url('images/default_profile.webp')}}" alt="profile img"
@@ -17,11 +17,13 @@
                         <div class="flex justify-between items-center align-baseline">
                             <div>
                                 <a class="text-gray-800"
-                                   href="/user/{{$period->user->id}}">{{ $period->user->name }}</a>
+                                   href="/user/{{$period->user_id}}">{{ $period->user_name }}</a>
                                 <small
-                                        class="ml-2 text-sm text-gray-600">{{ $period->created_at->format('j M Y, g:i a') }}</small>
+                                        class="ml-2 text-sm text-gray-600">{{ date('j M Y, g:i a',  strtotime($period->created_at)) }}</small>
                             </div>
-                            @if ($period->user->is(auth()->user())|| auth()->user()->role === 'admin')
+
+{{--                            {{dd(auth()->user()->name)}}--}}
+                            @if ($period->user_name === (auth()->user()->name) || auth()->user()->role === 'admin')
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button>
@@ -34,17 +36,17 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        @if($period->user->is(auth()->user()))
+                                        @if($period->user_name === (auth()->user()->name))
                                         <x-dropdown-link
                                                 x-on:click.prevent="$dispatch('open-modal', 'edit-period-{{$period->id}}')">
                                             {{ __('Edit Request') }}
                                         </x-dropdown-link>
                                         @endif
-                                        @if($period->user->is(auth()->user()) || auth()->user()->role === 'admin')
-                                            <form method="POST" action="{{ route('requests.destroy', $period) }}">
+                                        @if($period->user_name === (auth()->user()->name) || auth()->user()->role === 'admin')
+                                            <form method="POST" action="{{ route('requests.destroy', $period->id) }}">
                                                 @csrf
                                                 @method('delete')
-                                                <x-dropdown-link :href="route('requests.destroy', $period)"
+                                                <x-dropdown-link :href="route('requests.destroy', $period->id)"
                                                                  onclick="event.preventDefault(); this.closest('form').submit();"
                                                                  style="color: red">
                                                     {{ __('Delete') }}
@@ -61,18 +63,15 @@
 
                 <div style="margin-left: 50px">
                     <h2 class="text-gray-800 leading-tight name">
-                        Requested Period: <b>{{$period->start_date->format('d-m-Y')}}
-                            - {{$period->end_date->format('d-m-Y')}}</b>
+                        Requested Period: <b>{{ date('j M Y, g:i a',  strtotime($period->start_date)) }}
+                            - {{ date('j M Y, g:i a',  strtotime($period->end_date))}}</b>
                     </h2>
                     <h2 class="text-gray-800 leading-tight name mb-6">
                         Hourly Wage: <b>€{{$period->hourly_wage}}</b>
                     </h2>
-                    <div hidden>
-                        {{$pet = App\Models\Pet::where("id", $period->pet_id)->firstOrFail()}}
-                    </div>
                     <div class="flex">
-                        @if($pet->pet_image)
-                            <img class="shadow" src="{{url('storage/' . $pet->pet_image)}}"
+                        @if($period->pet_image)
+                            <img class="shadow" src="{{url('storage/' . $period->pet_image)}}"
                                  alt="pet img"
                                  style="border-radius: 50%; aspect-ratio: 1/1; object-fit: cover; width: 100px;">
                         @else
@@ -82,16 +81,16 @@
                         @endif
                         <div class="pet-info ml-4">
                             <h2 class="text-gray-800 leading-tight name">
-                                {{$pet->name}}
+                                {{$period->pet_name}}
                             </h2>
-                            <p>Age: {{$pet->age}}</p>
-                            <p>Difficulty: {{$pet->difficulty}}</p>
-                            <p>Type: {{$pet->type}}</p>
+                            <p>Age: {{$period->pet_age}}</p>
+                            <p>Difficulty: {{$period->pet_difficulty}}</p>
+                            <p>Type: {{$period->pet_type}}</p>
                         </div>
                     </div>
                     <div class="mt-6" style="width: 100%">
                         <p>Description:</p>
-                        <p>{{$pet->description}}</p>
+                        <p>{{$period->pet_description}}</p>
                 </div>
             </div>
 

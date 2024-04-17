@@ -2,17 +2,17 @@
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8" x-init="$watch('show', open => {
   check(open, $el)
 })">
-        <form action="{{ route('requests.update', $period) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('requests.update', $period->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="mt-5">
                 <x-input-label for="start_date" :value="__('Start Date')"/>
-                <x-text-input value="{{ old('start_date', $period->start_date->format('Y-m-d'))}}" name="start_date" type="date" min="{{date('Y-m-d')}}"  onChange="changeStart(this)" class="mt-1 block w-full"/>
+                <x-text-input value="{{ old('start_date', $period->start_date)}}" name="start_date" type="date" min="{{date('Y-m-d')}}"  onChange="changeStart(this)" class="mt-1 block w-full"/>
             </div>
 
             <div class="mt-5">
                 <x-input-label for="end_date" :value="__('End Date')"/>
-                <x-text-input value="{{ old('end_date', $period->end_date->format('Y-m-d'))}}" name="end_date" type="date" min="{{date('Y-m-d')}}" class="end_date mt-1 block w-full"/>
+                <x-text-input value="{{ old('end_date', $period->end_date)}}" name="end_date" type="date" min="{{date('Y-m-d')}}" class="end_date mt-1 block w-full"/>
             </div>
 
             <div class="mt-5" style="display: flex; flex-direction: column">

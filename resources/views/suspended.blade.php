@@ -5,8 +5,6 @@
         </h1>
         <p>
             Please contact our admins.
-
         </p>
     </div>
-
 </x-guest-layout>
