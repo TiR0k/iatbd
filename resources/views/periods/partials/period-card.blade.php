@@ -63,8 +63,8 @@
 
                 <div style="margin-left: 50px">
                     <h2 class="text-gray-800 leading-tight name">
-                        Requested Period: <b>{{ date('j M Y, g:i a',  strtotime($period->start_date)) }}
-                            - {{ date('j M Y, g:i a',  strtotime($period->end_date))}}</b>
+                        Requested Period: <b>{{ date('j M Y',  strtotime($period->start_date)) }}
+                            - {{ date('j M Y',  strtotime($period->end_date))}}</b>
                     </h2>
                     <h2 class="text-gray-800 leading-tight name mb-6">
                         Hourly Wage: <b>€{{$period->hourly_wage}}</b>
