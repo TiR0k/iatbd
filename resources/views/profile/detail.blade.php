@@ -36,7 +36,7 @@
                         reviews</a><br>
                 </div>
             </div>
-            @if (auth()->user()->role === 'admin')
+            @if ((auth()->user()->role === 'admin' ) && (auth()->user()->id != $user->id))
                 <x-dropdown>
                     <x-slot name="trigger">
                         <button>
