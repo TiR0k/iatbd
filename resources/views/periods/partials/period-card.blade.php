@@ -19,10 +19,9 @@
                                 <a class="text-gray-800"
                                    href="/user/{{$period->user_id}}">{{ $period->user_name }}</a>
                                 <small
-                                        class="ml-2 text-sm text-gray-600">{{ date('j M Y, g:i a',  strtotime($period->created_at)) }}</small>
+                                    class="ml-2 text-sm text-gray-600">{{ date('j M Y, g:i a',  strtotime($period->created_at)) }}</small>
                             </div>
 
-{{--                            {{dd(auth()->user()->name)}}--}}
                             @if ($period->user_name === (auth()->user()->name) || auth()->user()->role === 'admin')
                                 <x-dropdown>
                                     <x-slot name="trigger">
@@ -31,16 +30,16 @@
                                                  class="h-4 w-4 text-gray-400"
                                                  viewBox="0 0 20 20" fill="currentColor">
                                                 <path
-                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"/>
                                             </svg>
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
                                         @if($period->user_name === (auth()->user()->name))
-                                        <x-dropdown-link
+                                            <x-dropdown-link
                                                 x-on:click.prevent="$dispatch('open-modal', 'edit-period-{{$period->id}}')">
-                                            {{ __('Edit Request') }}
-                                        </x-dropdown-link>
+                                                {{ __('Edit Request') }}
+                                            </x-dropdown-link>
                                         @endif
                                         @if($period->user_name === (auth()->user()->name) || auth()->user()->role === 'admin')
                                             <form method="POST" action="{{ route('requests.destroy', $period->id) }}">
@@ -91,10 +90,10 @@
                     <div class="mt-6" style="width: 100%">
                         <p>Description:</p>
                         <p>{{$period->pet_description}}</p>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
         </div>
     </div>
     <p class="text-gray-600">Comments</p>

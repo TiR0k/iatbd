@@ -1,5 +1,4 @@
 <x-app-layout>
-    {{--    <script type="text/javascript" src="{{URL::to('js/DateSelector.js')}}"></script>--}}
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
@@ -15,7 +14,6 @@
                     <x-slot name="content">
                         <form action="{{ route('requests.index')}}">
                             <div class="flex-col gap-4 mb-2">
-                                {{--                                {{dd($filterItems)}}--}}
                                 @foreach($filterItems as $filterItem)
                                     @if($filterItem->name != "difficulty")
                                         <div class="flex-col mb-4">
@@ -24,23 +22,29 @@
                                             <input type='{{$filterItem->type}}' name="{{$filterItem->name}}"
                                                    class="rounded-md"/>
                                         </div>
+                                    @elseif($filterItem->name === "difficulty")
+                                        <div class="flex-col mb-4">
+                                            <label for="{{$filterItem->name}}">{{$filterItem->label}}</label>
+                                            <br>
+                                            <select name="{{$filterItem->name}}" class="rounded-md">
+                                                <option value="" selected disabled>Select Difficulty</option>
+                                                @foreach($filterItem->options as $option)
+                                                    <option value="{{$option}}">{{$option}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     @endif
-                                    {{--                                    {{$filterItem->type}}--}}
                                 @endforeach
-                                {{--                                <input id='valueSelect' name="filterValue" type="date" placeholder="Value"/>`--}}
 
                             </div>
-
                             <x-primary-button type="submit">APPLY FILTER</x-primary-button>
                         </form>
-
                     </x-slot>
-
                 </x-filter>
                 <div>
                     <x-primary-button
-                        x-data=""
-                        x-on:click.prevent="$dispatch('open-modal', 'add-period')"
+                            x-data=""
+                            x-on:click.prevent="$dispatch('open-modal', 'add-period')"
                     >{{ __('Add Request') }}</x-primary-button>
                 </div>
             </div>
