@@ -13,7 +13,7 @@
                type="text" placeholder="Leave a reply">
         <input hidden name="period_id" type="number" value="{{$period->id}}">
     </div>
-    <div class="flex max-w-2xl mx-auto mt-2 justify-end">
+    <div class="flex max-w-2xl mx-auto mt-2 mb-6 justify-end">
         <x-primary-button onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Reply') }}</x-primary-button>
     </div>
 </form>

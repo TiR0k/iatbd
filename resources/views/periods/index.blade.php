@@ -48,30 +48,29 @@
                     >{{ __('Add Request') }}</x-primary-button>
                 </div>
             </div>
-
         </div>
     </x-slot>
 
-    @foreach ($periods as $period)
-        @include("periods.partials.period-card")
-        <div hidden>
-            {{$comments = App\Models\Comment::where('period_id', $period->id)->get() != null ? App\Models\Comment::where('period_id', $period->id)->get() : null}}
-        </div>
+    <div class="py-6">
+        @foreach ($periods as $period)
+            @include("periods.partials.period-card")
+            <div hidden>
+                {{$comments = App\Models\Comment::where('period_id', $period->id)->get() != null ? App\Models\Comment::where('period_id', $period->id)->get() : null}}
+            </div>
 
-        @foreach($comments as $comment)
-            @include("comments.comments")
+            @foreach($comments as $comment)
+                @include("comments.comments")
+            @endforeach
+
+            <div>
+                @include("comments.add-comment")
+            </div>
+
+            <x-modal name="edit-period-{{$period->id}}">
+                @include('periods.partials.edit-period')
+            </x-modal>
         @endforeach
-
-        <div>
-            @include("comments.add-comment")
-        </div>
-
-        <x-modal name="edit-period-{{$period->id}}">
-            @include('periods.partials.edit-period')
-        </x-modal>
-    @endforeach
-
-
+    </div>
     <x-modal id="modal_add" name="add-period" onopen="check">
         @include('periods.partials.add-period')
     </x-modal>

@@ -1,4 +1,4 @@
-<div class="max-w-2xl mx-auto mt-6">
+<div class="max-w-2xl mx-auto">
     <div class="bg-white shadow-sm rounded-lg divide-y">
         <div class="p-6 flex-col space-x-2">
             <div>
