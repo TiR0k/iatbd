@@ -30,7 +30,7 @@ class PeriodController extends Controller
                 $query->where('periods.start_date', '>=', $request->start_date);
             })
             ->when($request->end_date != null, function ($query) use ($request){
-                $query->where('periods.start_date', '<=', $request->end_date);
+                $query->where('periods.end_date', '<=', $request->end_date);
             })
             ->when($request->hourly_wage != null, function ($query) use ($request){
                 $query->where('periods.hourly_wage', '>=', $request->hourly_wage);
