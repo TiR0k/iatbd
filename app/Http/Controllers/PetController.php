@@ -84,7 +84,7 @@ class PetController extends Controller
             'age' => 'required|numeric',
             'difficulty' => 'required|string|max:50',
             'type' => 'required|string|max:50',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'pet_image' => 'image',
         ]);
 

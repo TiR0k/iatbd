@@ -25,8 +25,7 @@
                                 <small class="text-sm text-gray-600"> &middot; {{ __('Assigned to this user') }}</small>
                             @endif
                         </div>
-
-                        @if ($comment->user->is(auth()->user()) || $period->user->is(auth()->user()))
+                        @if ($comment->user->is(auth()->user()) || $period->user_name === auth()->user()->name)
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button>
